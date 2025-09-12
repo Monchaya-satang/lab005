@@ -1,7 +1,7 @@
 <?php
 require("connect_db.php");
 echo "<center>";
-echo "<form action=save_add_course.php method=post>";
+echo "<form action=save_add_studen.php method=post>";
 echo "<table border=1 width=40%>";
 echo "<tr><td>Student Code:</td><td><input type=text name=student_code /></td></tr>";
 echo "<tr><td>Student Name:</td><td><input type=text name=student_name /></td></tr>";
