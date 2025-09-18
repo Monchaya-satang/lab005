@@ -1,20 +1,32 @@
 <?php
 require("connect_db.php");
-$course_code = $_GET["course_code"];
-$sql = "SELECT * FROM courses WHERE course_code='$course_code'";
+$sql = "
+    SELECT exam_result.course_code, exam_result.student_code, students.student_name, exam_result.exam_point
+    FROM exam_result
+    LEFT JOIN students ON exam_result.student_code = students.student_code
+
+    UNION
+
+    SELECT exam_result.course_code, exam_result.student_code, students.student_name, exam_result.exam_point
+    FROM students
+    LEFT JOIN exam_result ON exam_result.student_code = students.student_code
+";
+
 $result = mysqli_query($conn, $sql);
-$course = mysqli_fetch_assoc($result);
-$sql = "SELECT E.*,S.student_name";
-$sql .= " FROM exam_result AS E";
-$sql .= " INNER JOIN students AS S ON E.student_code=S.student_code";$sql .= " WHERE E.course_code='$course_code'";
-$result = mysqli_query($conn, $sql);
+
 echo "<center>";
-echo "<h1>Exam Result " . $course["course_name"] . "</h1>";
 echo "<table border=1 width=40%>";
-echo "<tr><th>Students Code</th><th>Student Name</th><th>Point</th></tr>";
+echo "<tr><th>Course Code</th><th>Student Code</th><th>Student Name</th><th>Exam Point</th></tr>";
+
 while ($row = mysqli_fetch_assoc($result)) {
-echo "<tr><td>" . $row["student_code"] . "</td><td>" . $row["student_name"]
-. "</td><td>" . $row["point"] . "</td></tr>";
+    echo "<tr>
+        <td>{$row['course_code']}</td>
+        <td>{$row['student_code']}</td>
+        <td>{$row['student_name']}</td>
+        <td>{$row['exam_point']}</td>
+    </tr>";
 }
-echo "</table>";
+
+echo "</table>";  // แก้จาก <teble>
 echo "</center>";
+?>

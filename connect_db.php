@@ -22,7 +22,7 @@ $linkText = "Couress";
 echo "<a href=\"$url\">$linkText</a><br>";
 ?>
 <?php
-$url = "exam_result_list.php";
+$url = "show_exam_result.php";
 $linkText = "Exam Result";
 echo "<a href=\"$url\">$linkText</a><br>";
 ?>
